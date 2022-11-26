@@ -1,38 +1,36 @@
-# create-svelte
+# Frontend Mentor - Crowdfunding product page solution
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is a solution to the [Crowdfunding product page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/crowdfunding-product-page-7uvcZe7ZR).
 
-## Creating a project
+## Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+### The challenge
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Users should be able to:
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- View the optimal layout depending on their device's screen size
+- See hover states for interactive elements
+- Make a selection of which pledge to make
+- See an updated progress bar and total money raised based on their pledge total after confirming a pledge
+- See the number of total backers increment by one after confirming a pledge
+- Toggle whether or not the product is bookmarked
 
-## Developing
+### Screenshot
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+![](./screenshot.jpg)
 
-```bash
-npm run dev
+### Links
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- Solution URL: [Github](https://github.com/jeremylloyd/frontend-mentor-crowdfunding-product-page)
+- Live Site URL: [Vercel]()
 
-## Building
+## My process
 
-To create a production version of your app:
+### Built with
 
-```bash
-npm run build
-```
+- HTML
+- CSS
+- JS
+- Svelte
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+### What I learned
