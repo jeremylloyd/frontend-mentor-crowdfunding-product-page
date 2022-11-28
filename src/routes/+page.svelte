@@ -57,7 +57,7 @@
           <span class="stats__label">days left</span>
         </div>
       </div>
-      <progress class="stats__progress"></progress>
+      <progress class="stats__progress" value=0.8></progress>
     </section>
 
     <section class="info">
