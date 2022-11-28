@@ -1,3 +1,142 @@
+<div class="content">
+  <nav class="navbar">
+    <p class="navbar__logo"></p>
+    <ul class="navbar__items">
+      <li class="navbar__item"></li>
+      <li class="navbar__item"></li>
+      <li class="navbar__item"></li>
+    </ul>
+    <svg class="navbar__menu" width="16" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#AAA" fill-rule="evenodd"><path d="M0 0h16v3H0zM0 6h16v3H0zM0 12h16v3H0z"/></g></svg>
+    <svg class="navbar__close" width="14" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#AAA" fill-rule="evenodd"><path d="M2.404.782l11.314 11.314-2.122 2.122L.282 2.904z"/><path d="M.282 12.096L11.596.782l2.122 2.122L2.404 14.218z"/></g></svg>
+  </nav>
+  <main class="main">
+    <div class="main__logo"></div>
+    <article class="summary">
+      <h1 class="summary__title"></h1>
+      <p class="summary__desc"></p>
+      <div class="summary__actions">
+        <button class="button"></button>
+        <button class="button button--dark"></button>
+      </div>
+    </article>
+    
+    <section class="stats">
+      <div class="stats__metrics">
+        <div class="stats__section">
+          <span class="stats__metric"></span>
+          <span class="stats__label"></span>
+        </div>
+        <div class="stats__sep"></div>
+        <div class="stats__section">
+          <span class="stats__metric"></span>
+          <span class="stats__label"></span>
+        </div>
+        <div class="stats__sep"></div>
+        <div class="stats__section">
+          <span class="stats__metric"></span>
+          <span class="stats__label"></span>
+        </div>
+      </div>
+      <progress class="stats__progress"></progress>
+    </section>
+
+    <section class="info">
+      <h2 class="info__title"></h2>
+      <p class="info__desc"></p>
+      <p class="info__desc"></p>
+      <div class="card">
+        <header class="card__header">
+          <h3 class="card__title"></h3>
+          <h4 class="card__subtitle"></h4>
+        </header>
+        <p class="card__desc"></p>
+        <footer class="card__footer">
+          <div class="card__stat">
+            <span class="card__rem"></span>
+            <span class="card__label"></span>
+          </div>
+          <button class="button"></button>
+        </footer>
+      </div>
+      <div class="card">
+        <header class="card__header">
+          <h3 class="card__title"></h3>
+          <h4 class="card__subtitle"></h4>
+        </header>
+        <p class="card__desc"></p>
+        <footer class="card__footer">
+          <div class="card__stat">
+            <span class="card__rem"></span>
+            <span class="card__label"></span>
+          </div>
+          <button class="button"></button>
+        </footer>
+      </div>
+      <div class="card">
+        <header class="card__header">
+          <h3 class="card__title"></h3>
+          <h4 class="card__subtitle"></h4>
+        </header>
+        <p class="card__desc"></p>
+        <footer class="card__footer">
+          <div class="card__stat">
+            <span class="card__rem"></span>
+            <span class="card__label"></span>
+          </div>
+          <button class="button"></button>
+        </footer>
+      </div>
+    </section>
+
+    <div class="menu">
+      <ul class="menu__items">
+        <li class="menu__item"></li>
+        <li class="menu__item"></li>
+        <li class="menu__item"></li>
+      </ul>
+    </div>
+  </main>
+
+  <dialog open class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title"></h2>
+      <img src="svg/icon-close-menu.svg" alt="" class="modal__close">
+    </div>
+    <p class="modal__desc"></p>
+    <div class="card">
+      <header class="card__header">
+        <input type="radio" name="" id="" class="card__radio">
+        <h3 class="card__title"></h3>
+      </header>
+      <p class="card__desc"></p>
+    </div>
+    <div class="card">
+      <header class="card__header">
+        <input type="radio" name="" id="" class="card__radio">
+        <h3 class="card__title"></h3>
+      </header>
+      <p class="card__desc"></p>
+      <div class="card__stat">
+        <span class="card__rem"></span>
+        <span class="card__label"></span>
+      </div>
+      <div class="card__sep"></div>
+      <footer class="card__footer">
+        <h5 class="card__amounts"></h5>
+        <input type="number" name="" id="" class="amount">
+        <button class="button"></button>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog class="modal">
+    <div class="icon-confirm"></div>
+    <h2 class="modal__title"></h2>
+    <p class="modal__desc"></p>
+    <button class="button"></button>
+  </dialog>
+</div>
+
 About
 Discover
 Get Started
