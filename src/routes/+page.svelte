@@ -1,11 +1,65 @@
 <script>
+  let navbarHeight;
   let scrollY;
+  let modalThanks;
+  let menuPledge;
+  let pledgeInput;
+  let pledge;
+  let pledge0;
+  let pledge1;
+  let pledges = [
+    {
+      'id': 0,
+      'title': "Pledge with no reward",
+      'description': "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email.",
+    },
+    {
+      'id': 1,
+      'title': 'Bamboo Stand',
+      'minAmount': 25,
+      'description': "You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and you'll be added to a special Backer member list.",
+      'remaining': 101,
+    },
+    {
+      'id': 2,
+      'title': 'Black Edition Stand',
+      'minAmount': 75,
+      'description': "You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our Backer member list. Shipping is included.",
+      'remaining': 64,
+    },
+    {
+      'id': 3,
+      'title': 'Mahogany Special Edition',
+      'minAmount': 200,
+      'description': "You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be added to our Backer member list. Shipping is included.",
+      'remaining': 0,
+    },
+  ]
+
+  function showMenuPledge() {
+    menuPledge.showModal();
+  }
+
+  function hideMenuPledge() {
+    menuPledge.close();
+  }
+
+  function showModalThanks() {
+    modalThanks.showModal();
+  }
+
+  function submitPledge() {
+    hideMenuPledge();
+    showModalThanks();
+  }
+
+  $: console.log(pledge);
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
 
 <!-- Change navbar colour on scroll -->
-{#if scrollY > 150}
+{#if scrollY > navbarHeight}
   <style>
     .navbar {
       background-image: linear-gradient(black, hsla(0, 0%, 0%, 60%));
@@ -16,7 +70,7 @@
 
 
 <div class="content">
-  <nav class="navbar">
+  <nav class="navbar" bind:offsetHeight={navbarHeight}>
     <img src="svg/logo.svg" alt="" class="navbar__logo">
     <ul class="navbar__items">
       <li class="navbar__item">About</li>
@@ -32,10 +86,10 @@
       <h1 class="summary__title">Mastercraft Bamboo Monitor Riser</h1>
       <p class="summary__desc">A beautiful & handcrafted monitor stand to reduce neck and eye strain.</p>
       <div class="summary__actions">
-        <button class="button">Back this project</button>
+        <button class="button" on:click={showMenuPledge}>Back this project</button>
         <button class="button button--dark button--small">
           <span class="button__label">Bookmark</span>
-          <img class="button__icon" src="svg/icon-bookmark.svg" alt="icon-bookmark">
+          <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle fill="var(--bkmk-circle)" cx="28" cy="28" r="28"/><path fill="var(--bkmk-tag)" d="M23 19v18l5-5.058L33 37V19z"/></g></svg>
         </button>
       </div>
     </article>
@@ -71,57 +125,25 @@
         Featuring artisan craftsmanship, the simplicity of design creates extra desk space below your computer 
         to allow notepads, pens, and USB sticks to be stored under the stand.
       </p>
-      <div class="card">
-        <header class="card__header">
-          <h3 class="card__title">Bamboo Stand</h3>
-          <h4 class="card__subtitle">Pledge $25 or more</h4>
-        </header>
-        <p class="card__desc">
-          You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and 
-          you’ll be added to a special Backer member list.
-        </p>
-        <footer class="card__footer">
-          <div class="card__stat">
-            <span class="card__rem">101</span>
-            <span class="card__label">left</span>
+
+      {#each pledges as p}
+        {#if p.minAmount ?? 0 > 0}
+          <div class="card" class:card--disabled={p.remaining === 0}>
+            <header class="card__titles">
+              <h3 class="card__title">{p.title}</h3>
+              <h4 class="card__subtitle">Pledge ${p.minAmount} or more</h4>
+            </header>
+            <p class="card__desc">{p.description}</p>
+            <footer class="card__footer">
+              <div class="card__stat">
+                <span class="card__rem">{p.remaining}</span>
+                <span class="card__label">left</span>
+              </div>
+              <button class="button" class:button--disabled={p.remaining === 0} >{p.remaining > 0 ? "Select Reward" : "Out of Stock"}</button>
+            </footer>
           </div>
-          <button class="button">Select Reward</button>
-        </footer>
-      </div>
-      <div class="card">
-        <header class="card__header">
-          <h3 class="card__title">Black Edition Stand</h3>
-          <h4 class="card__subtitle">Pledge $75 or more</h4>
-        </header>
-        <p class="card__desc">
-          You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our Backer 
-          member list. Shipping is included.
-        </p>
-        <footer class="card__footer">
-          <div class="card__stat">
-            <span class="card__rem">64</span>
-            <span class="card__label">left</span>
-          </div>
-          <button class="button">Select Reward</button>
-        </footer>
-      </div>
-      <div class="card">
-        <header class="card__header">
-          <h3 class="card__title">Mahogany Special Edition</h3>
-          <h4 class="card__subtitle">Pledge $200 or more</h4>
-        </header>
-        <p class="card__desc">
-          You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be added 
-          to our Backer member list. Shipping is included.
-        </p>
-        <footer class="card__footer">
-          <div class="card__stat">
-            <span class="card__rem">0</span>
-            <span class="card__label">left</span>
-          </div>
-          <button class="button">Out of Stock</button>
-        </footer>
-      </div>
+        {/if}
+      {/each}
     </section>
 
     <div class="menu">
@@ -133,104 +155,57 @@
     </div>
   </main>
 
-  <dialog class="modal">
-    <div class="modal__header">
-      <h2 class="modal__title"></h2>
-      <img src="svg/icon-close-menu.svg" alt="" class="modal__close">
-    </div>
-    <p class="modal__desc"></p>
-    <div class="card">
-      <header class="card__header">
-        <input type="radio" name="" id="" class="card__radio">
-        <h3 class="card__title"></h3>
-      </header>
-      <p class="card__desc"></p>
-    </div>
-    <div class="card">
-      <header class="card__header">
-        <input type="radio" name="" id="" class="card__radio">
-        <h3 class="card__title"></h3>
-      </header>
-      <p class="card__desc"></p>
-      <div class="card__stat">
-        <span class="card__rem"></span>
-        <span class="card__label"></span>
+  <dialog bind:this={menuPledge} class="modal">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h2 class="modal__title">Back this project</h2>
+        <button class="modal__close" on:click={hideMenuPledge}>
+          <img src="svg/icon-close-menu.svg" alt="">
+        </button>
       </div>
-      <div class="card__sep"></div>
-      <footer class="card__footer">
-        <h5 class="card__amounts"></h5>
-        <input type="number" name="" id="" class="card__amount">
-        <button class="button"></button>
-      </footer>
+      <p class="modal__desc">
+        Want to support us in bringing Mastercraft Bamboo Monitor Riser out in the world?
+      </p>
+  
+      {#each pledges as p}
+        <label for="pledge{p.id}">
+          <div class="card" class:card--disabled={p.remaining === 0}>
+            <header class="card__header">
+              <input type="radio" name="pledge" id="pledge{p.id}" class="card__radio" value={p.id} bind:group={pledgeInput} disabled={p.remaining === 0}>
+              <div class="card__titles">
+                <h3 class="card__title">{p.title}</h3>
+                {#if p.minAmount}
+                  <h4 class="card__subtitle">Pledge ${p.minAmount} or more</h4>
+                {/if}
+              </div>
+            </header>
+            <p class="card__desc">{p.description}</p>
+            {#if p.remaining !== undefined}
+              <div class="card__stat">
+                <span class="card__rem card__rem--small">{p.remaining}</span>
+                <span class="card__label">left</span>
+              </div>
+            {/if}
+            {#if pledgeInput == p.id}
+              <div class="card__sep"></div>
+              <footer class="card__footer">
+                <h5 class="card__amounts">Enter your pledge</h5>
+                <input type="number" value={p.minAmount ?? 0} class="card__amount">
+                <button class="button" on:click={submitPledge}>Continue</button>
+              </footer>
+            {/if}
+          </div>
+        </label>
+      {/each}
     </div>
   </dialog>
 
-  <dialog class="modal">
-    <div class="icon-confirm"></div>
-    <h2 class="modal__title"></h2>
-    <p class="modal__desc"></p>
-    <button class="button"></button>
+  <dialog class="modal" bind:this={modalThanks}>
+    <div class="modal__content modal__content--centred">
+      <img src="svg/icon-check.svg" alt="icon-check">
+      <h2 class="modal__title">Thanks for your support!</h2>
+      <p class="modal__desc">Your pledge brings us one step closer to sharing Mastercraft Bamboo Monitor Riser worldwide. You will get an email once our campaign is completed.</p>
+      <button class="button" on:click={() => modalThanks.close()}>Got it!</button>
+    </div>
   </dialog>
 </div>
-
-
-
-
-
-
-
-<!-- Selection modal start -->
-
-Back this project
-Want to support us in bringing Mastercraft Bamboo Monitor Riser out in the world?
-
-Pledge with no reward
-Choose to support us without a reward if you simply believe in our project. As a backer, 
-you will be signed up to receive product updates via email.
-
-Bamboo Stand
-Pledge $25 or more
-You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and
-you’ll be added to a special Backer member list.
-101 left
-
-<!-- Selected pledge start -->
-Enter your pledge
-$25
-Continue
-<!-- Selected pledge end -->
-
-Black Edition Stand
-Pledge $75 or more
-You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our Backer
-member list. Shipping is included.
-64 left
-
-<!-- Selected pledge start -->
-Enter your pledge
-$75
-Continue
-<!-- Selected pledge end -->
-
-Mahogany Special Edition
-Pledge $200 or more
-You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be added
-to our Backer member list. Shipping is included.
-0 left
-
-<!-- Selected pledge  start -->
-Enter your pledge
-$200
-Continue
-<!-- Selected pledge end -->
-
-<!-- Selection modal end -->
-
-<!-- Success modal start -->
-
-Thanks for your support!
-Your pledge brings us one step closer to sharing Mastercraft Bamboo Monitor Riser worldwide. You will get
-an email once our campaign is completed.
-Got it!
-
-<!-- Success modal end -->
