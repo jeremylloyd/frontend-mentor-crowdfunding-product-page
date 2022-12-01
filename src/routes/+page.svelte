@@ -1,7 +1,10 @@
 <script>
   let navbarHeight;
+  let navbarMenu;
+  let navbarClose;
   let scrollY;
   let modalThanks;
+  let modalMenu;
   let menuPledge;
   let pledgeInput;
   let pledge;
@@ -53,6 +56,13 @@
     showModalThanks();
   }
 
+  function toggleModalMenu() {
+    modalMenu.classList.toggle("menu--hidden");
+    navbarMenu.classList.toggle("hidden");
+    navbarClose.classList.toggle("hidden");
+    console.log("Menu toggled");
+  }
+
   $: console.log(pledge);
 </script>
 
@@ -67,19 +77,26 @@
   </style>
 {/if}
 
-
-
 <div class="content">
+  <div class="menu menu--hidden" bind:this={modalMenu}>
+    <ul class="menu__items">
+      <li class="menu__item"><a class="menu__link" href="./">About</a></li>
+      <li class="menu__item"><a class="menu__link" href="./">Discover</a></li>
+      <li class="menu__item"><a class="menu__link" href="./">Get Started</a></li>
+    </ul>
+  </div>
+
   <nav class="navbar" bind:offsetHeight={navbarHeight}>
-    <img src="svg/logo.svg" alt="" class="navbar__logo">
+    <a class="navbar__logo" href=""><img src="svg/logo.svg" alt=""></a>
     <ul class="navbar__items">
       <li class="navbar__item">About</li>
       <li class="navbar__item">Discover</li>
       <li class="navbar__item">Get Started</li>
     </ul>
-    <img src="svg/icon-hamburger.svg" alt="" class="navbar__menu">
-    <img src="svg/icon-close-menu.svg" alt="" class="navbar__close">
+    <button class="navbar__menu" bind:this={navbarMenu} on:click={toggleModalMenu}><img src="svg/icon-hamburger.svg" alt=""></button>
+    <button class="navbar__menu hidden" bind:this={navbarClose} on:click={toggleModalMenu}><img src="svg/icon-close-menu.svg" alt=""></button>
   </nav>
+
   <main class="main">
     <article class="summary">
       <img src="svg/logo-mastercraft.svg" alt="logo-mastercraft" class="summary__logo">
@@ -145,14 +162,6 @@
         {/if}
       {/each}
     </section>
-
-    <div class="menu">
-      <ul class="menu__items">
-        <li class="menu__item"></li>
-        <li class="menu__item"></li>
-        <li class="menu__item"></li>
-      </ul>
-    </div>
   </main>
 
   <dialog bind:this={menuPledge} class="modal">
@@ -188,10 +197,12 @@
             {/if}
             {#if pledgeInput == p.id}
               <div class="card__sep"></div>
-              <footer class="card__footer">
+              <footer class="card__footer card__footer--small flex-centred">
                 <h5 class="card__amounts">Enter your pledge</h5>
-                <input type="number" value={p.minAmount ?? 0} class="card__amount">
-                <button class="button" on:click={submitPledge}>Continue</button>
+                <div class="card__pledge">
+                  <input type="number" value={p.minAmount ?? 0} class="card__amount" min=0>
+                  <button class="button button--slim" on:click={submitPledge}>Continue</button>
+                </div>
               </footer>
             {/if}
           </div>
