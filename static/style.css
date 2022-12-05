@@ -120,6 +120,11 @@ body {
   display: none
 }
 
+.button--dark.button--enabled {
+  --bkmk-circle: var(--cyandark);
+  --bkmk-tag: white;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -496,4 +501,8 @@ body {
 
 .flex-centred {
   align-items: center;
+}
+
+.icon-bookmark {
+  transition: fill 1s;
 }

@@ -12,6 +12,7 @@
   let pledge0;
   let pledge1;
   let total = 89914;
+  let bookmarked = false;
   let pledges = [
     {
       'id': 0,
@@ -118,9 +119,9 @@
       <p class="summary__desc">A beautiful & handcrafted monitor stand to reduce neck and eye strain.</p>
       <div class="summary__actions">
         <button class="button" on:click={showMenuPledge}>Back this project</button>
-        <button class="button button--dark button--small">
+        <button class="button button--dark button--small" class:button--enabled={bookmarked} on:click={() => bookmarked = !bookmarked}>
           <span class="button__label">Bookmark</span>
-          <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle fill="var(--bkmk-circle)" cx="28" cy="28" r="28"/><path fill="var(--bkmk-tag)" d="M23 19v18l5-5.058L33 37V19z"/></g></svg>
+          <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><circle fill="var(--bkmk-circle)" cx="28" cy="28" r="28"/><path fill="var(--bkmk-tag)" d="M23 19v18l5-5.058L33 37V19z"/></g></svg>
         </button>
       </div>
     </article>
