@@ -6,15 +6,18 @@
   let modalThanks;
   let modalMenu;
   let menuPledge;
+  let pledgeAmount;
   let pledgeInput;
   let pledge;
   let pledge0;
   let pledge1;
+  let total = 89914;
   let pledges = [
     {
       'id': 0,
       'title': "Pledge with no reward",
       'description': "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email.",
+      'amount': 0,
     },
     {
       'id': 1,
@@ -22,6 +25,7 @@
       'minAmount': 25,
       'description': "You get an ergonomic stand made of natural bamboo. You've helped us launch our promotional campaign, and you'll be added to a special Backer member list.",
       'remaining': 101,
+      'amount': 25,
     },
     {
       'id': 2,
@@ -29,6 +33,7 @@
       'minAmount': 75,
       'description': "You get a Black Special Edition computer stand and a personal thank you. You’ll be added to our Backer member list. Shipping is included.",
       'remaining': 64,
+      'amount': 75,
     },
     {
       'id': 3,
@@ -36,6 +41,7 @@
       'minAmount': 200,
       'description': "You get two Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you. You’ll be added to our Backer member list. Shipping is included.",
       'remaining': 0,
+      'amount': 200,
     },
   ]
 
@@ -43,24 +49,32 @@
     menuPledge.showModal();
   }
 
+  const selectPledge = (id) => () => {
+    if (pledges.filter((x) => x.id === id)[0].remaining === 0) {
+      return;
+    }
+    pledgeInput = id;
+    menuPledge.showModal();
+  }
+
   function hideMenuPledge() {
     menuPledge.close();
   }
 
-  function showModalThanks() {
-    modalThanks.showModal();
-  }
-
-  function submitPledge() {
+	const submit = pledgeId => () => {
+    total += pledges[pledgeId].amount;
+    pledges[pledgeId].amount = pledges[pledgeId].minAmount ?? 0;
+    if (pledges[pledgeId].hasOwnProperty("remaining")) {
+      pledges[pledgeId].remaining -= 1;
+    }
     hideMenuPledge();
-    showModalThanks();
-  }
+    modalThanks.showModal();
+	};
 
   function toggleModalMenu() {
     modalMenu.classList.toggle("menu--hidden");
     navbarMenu.classList.toggle("hidden");
     navbarClose.classList.toggle("hidden");
-    console.log("Menu toggled");
   }
 
   $: console.log(pledge);
@@ -114,7 +128,7 @@
     <section class="stats">
       <div class="stats__metrics">
         <div class="stats__section">
-          <span class="stats__metric">$89,914</span>
+          <span class="stats__metric">${total}</span>
           <span class="stats__label">of $100,000 backed</span>
         </div>
         <div class="stats__sep"></div>
@@ -128,7 +142,7 @@
           <span class="stats__label">days left</span>
         </div>
       </div>
-      <progress class="stats__progress" value=0.8></progress>
+      <progress class="stats__progress" value={total} max=100000></progress>
     </section>
 
     <section class="info">
@@ -156,7 +170,7 @@
                 <span class="card__rem">{p.remaining}</span>
                 <span class="card__label">left</span>
               </div>
-              <button class="button" class:button--disabled={p.remaining === 0} >{p.remaining > 0 ? "Select Reward" : "Out of Stock"}</button>
+              <button class="button" on:click={selectPledge(p.id)} class:button--disabled={p.remaining === 0} >{p.remaining > 0 ? "Select Reward" : "Out of Stock"}</button>
             </footer>
           </div>
         {/if}
@@ -178,7 +192,7 @@
   
       {#each pledges as p}
         <label for="pledge{p.id}">
-          <div class="card" class:card--disabled={p.remaining === 0}>
+          <div class="card" class:card--disabled={p.remaining === 0} class:card--selected={pledgeInput == p.id}>
             <header class="card__header">
               <input type="radio" name="pledge" id="pledge{p.id}" class="card__radio" value={p.id} bind:group={pledgeInput} disabled={p.remaining === 0}>
               <div class="card__titles">
@@ -200,8 +214,11 @@
               <footer class="card__footer card__footer--small flex-centred">
                 <h5 class="card__amounts">Enter your pledge</h5>
                 <div class="card__pledge">
-                  <input type="number" value={p.minAmount ?? 0} class="card__amount" min=0>
-                  <button class="button button--slim" on:click={submitPledge}>Continue</button>
+                  <div class="card__input">
+                    <div class="card__amount-unit">$</div>
+                    <input type="number" class="card__amount" min=0 step=1 bind:value={p.amount}>
+                  </div>
+                  <button class="button button--slim" on:click={submit(p.id)}>Continue</button>
                 </div>
               </footer>
             {/if}
